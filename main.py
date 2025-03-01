@@ -6,7 +6,7 @@ import google.generativeai as genai
 # Set the page configuration immediately after imports
 st.set_page_config(page_title="Unit Converter by Shahroz", layout="wide")
 
-if "history" not in st.session_state: # Initialize history list in session state
+if "history" not in st.session_state:  # Initialize history list in session state
     st.session_state.history = []
 
 # ----------------------------
@@ -31,7 +31,6 @@ st.markdown(
 # ----------------------------
 # Premium Custom CSS with Light/Dark Mode Adjustments & Animations
 # ----------------------------
-# Updated CSS with modern animations and premium look
 premium_css = """
 <style>
 /* Modern Gradient Background */
@@ -39,13 +38,12 @@ premium_css = """
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     font-family: 'Poppins', sans-serif;
-    color: #333; /* Default text color */
-    padding-top: 0 !important; /* Removed top padding */
+    color: #333;
+    padding-top: 0 !important;
 }
-
 /* Glassmorphism Effect for Containers */
 .st-emotion-cache-1y4p8pa, .st-emotion-cache-1jicfl2, .st-emotion-cache-6qob1r {
-    background: rgba(255, 255, 255, 0.95) !important; /* Slightly more opaque for better readability */
+    background: rgba(255, 255, 255, 0.95) !important;
     backdrop-filter: blur(10px) !important;
     border-radius: 20px !important;
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
@@ -53,15 +51,13 @@ premium_css = """
     padding: 25px !important;
     margin-bottom: 25px !important;
     transition: all 0.3s ease-in-out !important;
-    color: #333; /* Text color inside containers */
+    color: #333;
 }
-
 /* Hover Effects */
 .st-emotion-cache-1y4p8pa:hover, .st-emotion-cache-1jicfl2:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.5) !important;
 }
-
 /* Modern Input Fields */
 .stTextInput>div>div>input, .stNumberInput>div>div>input,
 .stSelectbox>div>div>select, .stTextArea>div>textarea {
@@ -70,14 +66,12 @@ premium_css = """
     padding: 12px 20px !important;
     transition: all 0.3s ease !important;
     font-family: 'Poppins', sans-serif;
-    color: #333; /* Text color inside input fields */
+    color: #333;
 }
-
 .stTextInput>div>div>input:focus, .stNumberInput>div>div>input:focus {
     border-color: #667eea !important;
     box-shadow: 0 0 15px rgba(102, 126, 234, 0.2) !important;
 }
-
 /* Gradient Buttons */
 .stButton>button {
     background: linear-gradient(45deg, #667eea, #764ba2) !important;
@@ -89,12 +83,10 @@ premium_css = """
     transition: all 0.3s ease !important;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
 }
-
 .stButton>button:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2) !important;
 }
-
 /* Animated Header */
 header h1 {
     font-size: 2.5rem !important;
@@ -103,135 +95,99 @@ header h1 {
     margin-bottom: 30px !important;
     font-family: 'Poppins', sans-serif;
 }
-
 /* Pulse Animation for Convert Button */
 @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
 }
-
 .convert-btn-animation {
     animation: pulse 2s infinite;
 }
-
 /* Result Display Animation */
 @keyframes slideIn {
     from { transform: translateY(20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
-
 .stSuccess {
     animation: slideIn 0.5s ease-out !important;
     border-left: 5px solid #667eea !important;
     border-radius: 12px !important;
-    color: #FFFFFF !important; /* Result text will now be white */
-    font-weight: bold !important; /* Result text is now bold */
+    color: #FFFFFF !important;
+    font-weight: bold !important;
     background-color: #667eea !important;
     padding: 15px !important;
 }
-
-/* Improve text visibility in markdown and other elements */
+/* Text styling for markdown and alerts */
 .stMarkdown, .stText, .stAlert, .stSuccess, .stError {
-    color: white !important; /* Text color for these elements is now white */
-
+    color: white !important;
 }
-
 /* Custom Tabs Design */
 [data-baseweb="tab-list"] {
     gap: 10px !important;
 }
-
 [data-baseweb="tab"] {
     padding: 12px 25px !important;
     border-radius: 10px !important;
     transition: all 0.3s ease !important;
-    background: rgba(255, 255, 255, 0.95) !important; /* Slightly more opaque for better readability */
+    background: rgba(255, 255, 255, 0.95) !important;
     font-family: 'Poppins', sans-serif;
-    color: #333; /* Text color for tabs */
+    color: #333;
 }
-
 [data-baseweb="tab"]:hover {
     background: white !important;
     transform: translateY(-2px);
 }
-
 [aria-selected="true"] {
     background: white !important;
     color: #667eea !important;
     font-weight: bold !important;
     border-bottom: 3px solid #667eea !important;
 }
-
 /* Footer Styling */
 .footer {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    # background-color: rgba(255, 255, 255, 0.95); /* Slightly more opaque for better readability */
     text-align: center;
-    padding: 0px ;
+    padding: 0px;
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
-    color:white;
+    color: white;
     backdrop-filter: blur(10px);
-    # border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
-
-/* Improve text visibility in markdown and other elements */
-.stMarkdown, .stText, .stAlert, .stSuccess, .stError {
-    color: white !important; /* Darker text color for better contrast - changed to white as requested */
-}
-
-/* Improve visibility of dropdowns and select boxes */
-.stSelectbox>div>div>select {
-    color: #333 !important;
-}
-
-/* Responsive Design for Mobile */
 @media (max-width: 768px) {
-    /* Adjust header font size */
     header h1 {
         font-size: 1.8rem !important;
     }
-
-    /* Adjust input fields */
     .stTextInput>div>div>input, .stNumberInput>div>div>input,
     .stSelectbox>div>div>select, .stTextArea>div>textarea {
         padding: 10px 15px !important;
         font-size: 14px !important;
     }
-
-    /* Adjust buttons */
     .stButton>button {
         padding: 10px 20px !important;
         font-size: 14px !important;
     }
-
-    /* Adjust tabs */
     [data-baseweb="tab"] {
         padding: 10px 15px !important;
         font-size: 14px !important;
     }
-
-    /* Adjust footer */
     .footer {
         font-size: 12px !important;
     }
-
     .stSuccess {
-    animation: slideIn 0.5s ease-out !important;
-    border-left: 5px solid #667eea !important;
-    border-radius: 12px !important;
-    color: white !important; /* Text color */
-    background-color: #667eea !important; /* Background color - Added !important here */
-    padding: 15px !important;
-}
+        animation: slideIn 0.5s ease-out !important;
+        border-left: 5px solid #667eea !important;
+        border-radius: 12px !important;
+        color: white !important;
+        background-color: #667eea !important;
+        padding: 15px !important;
+    }
 }
 </style>
 """
-
 st.markdown(premium_css, unsafe_allow_html=True)
 
 # ----------------------------
@@ -282,22 +238,22 @@ def convert_units(value, from_unit, to_unit, category):
 # ----------------------------
 def is_roman_urdu(query):
     query_lower = query.lower()
+    # If the query contains any actual Urdu script letters, it's not Roman Urdu.
     for char in query:
         if '\u0600' <= char <= '\u06FF':
             return False
-    roman_urdu_keywords = [
-        "kitne", "hotay", "hota", "hoti", "hain", "kaise", "kya", "mein",
-        "miter", "meter", "cm", "kg", "kilogram", "gram", "km", "kilometer",
-        "centemeter", "klomiter", "center", "centimeter"
-    ]
+    # Use only keywords that are unique to Roman Urdu conversation.
+    roman_urdu_keywords = ["kitne", "hotay", "hain", "kaise", "kya", "badlo"]
     for keyword in roman_urdu_keywords:
         if keyword in query_lower:
             return True
     return False
 
 def determine_language(user_query):
+    # If the query contains any Urdu script, consider it Urdu (and then reject it).
     if any('\u0600' <= c <= '\u06FF' for c in user_query):
         return "Urdu"
+    # If uniquely Roman Urdu keywords are found, treat it as Roman Urdu.
     elif is_roman_urdu(user_query):
         return "Roman Urdu"
     else:
@@ -306,11 +262,10 @@ def determine_language(user_query):
 def ai_response(user_query):
     language_mode = determine_language(user_query)
 
-    # Remove Urdu response handling
+    # Only allow English or Roman Urdu
     if language_mode == "Urdu":
         return "❌ I only answer unit conversion questions in English or Roman Urdu. Please use one of these languages."
 
-    # Define the prompt based on the language mode
     if language_mode == "Roman Urdu":
         prompt = f"""
 You are a smart unit converter assistant created by Muhammad Shahroz. Your sole purpose is to perform unit conversions.
@@ -345,8 +300,6 @@ Examples:
 - "2 kg to gram" → "2 kg = 2000 gram"
 Now answer the following question: {user_query}
 """
-
-    # Generate the response using the AI model
     response = ai_model.generate_content(prompt)
     return response.text.strip()
 
@@ -373,17 +326,14 @@ with tabs[0]:
             value = st.number_input("Enter Value", min_value=0.0, value=1.0, step=0.1)
         if st.button("Convert", key="manual_convert"):
             result = convert_units(value, from_unit, to_unit, category)
-            st.success(f"**{value:.4f} {from_unit} = {result:.4f} {to_unit}**") # Result text is now bold and white
-
-            # Add to conversion history
+            st.success(f"**{value:.4f} {from_unit} = {result:.4f} {to_unit}**")
             conversion_text = f"{value:.4f} {from_unit} = {result:.4f} {to_unit}"
             st.session_state.history.append(conversion_text)
 
-    # Display conversion history
     if st.session_state.history:
-        st.subheader("Conversion History") # Title for history section
-        for item in st.session_state.history: # Loop through history list
-            st.markdown(f"- {item}") # Display each item as list item
+        st.subheader("Conversion History")
+        for item in st.session_state.history:
+            st.markdown(f"- {item}")
 
 with tabs[1]:
     st.subheader("AI Unit Converter")
@@ -393,7 +343,7 @@ with tabs[1]:
         if user_query.strip() == "":
             st.error("Please enter a valid query.")
         else:
-            with st.spinner("Generating response..."):  # Add a loader/spinner
+            with st.spinner("Generating response..."):
                 answer = ai_response(user_query)
                 st.markdown(f"**Answer:** {answer}")
 
